@@ -27,7 +27,6 @@ pub const zeroVecI8 = simd_config.zeroVecI8;
 // Re-export f16 utilities
 pub const f16_utils = @import("f16_utils.zig");
 pub const VEC_F16_SIZE = f16_utils.VEC_F16_SIZE;
-pub const VEC_F32_SIZE = f16_utils.VEC_F32_SIZE;
 pub const VecF16Alias = f16_utils.VecF16;
 pub const VecF32Alias = f16_utils.VecF32;
 pub const zeroVecF16Alias = f16_utils.zeroVecF16;
@@ -49,8 +48,6 @@ pub const quantizeF16ToTernary = f16_utils.quantizeF16ToTernary;
 // Re-export f16 shadow weights
 pub const f16_shadow = @import("f16_shadow.zig");
 pub const F16ShadowStorage = f16_shadow.F16ShadowStorage;
-pub const DEFAULT_SYNC_INTERVAL = f16_shadow.DEFAULT_SYNC_INTERVAL;
-pub const DEFAULT_QUANTIZE_THRESHOLD = f16_shadow.DEFAULT_QUANTIZE_THRESHOLD;
 pub const f32ToF16SliceShadow = f16_shadow.f32ToF16Slice;
 pub const f16ToF32SliceShadow = f16_shadow.f16ToF32Slice;
 pub const dotProductF16Shadow = f16_shadow.dotProductF16;
@@ -75,9 +72,6 @@ pub const estimateSpeedup = sparse_simd.estimateSpeedup;
 
 // Re-export ternary packing
 pub const ternary_pack = @import("ternary_pack.zig");
-pub const TRIT_NEG = ternary_pack.TRIT_NEG;
-pub const TRIT_ZERO = ternary_pack.TRIT_ZERO;
-pub const TRIT_POS = ternary_pack.TRIT_POS;
 pub const packTernary16 = ternary_pack.packTernary16;
 pub const unpackTernary16 = ternary_pack.unpackTernary16;
 pub const packTernarySlice = ternary_pack.packTernarySlice;

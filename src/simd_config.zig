@@ -156,7 +156,11 @@ pub fn simdInfoString() []const u8 {
 /// Print SIMD configuration at runtime
 /// Note: Only works in executables, not in test mode
 pub fn printSimdConfig() void {
-    const stdout = std.io.getStdOut().writer();
+    // std.io.getStdOut() was removed in 0.15.
+    var stdout_buffer: [4096]u8 = undefined;
+    var stdout_writer = std.fs.File.stdout().writer(&stdout_buffer);
+    const stdout = &stdout_writer.interface;
+    defer stdout.flush() catch {};
 
     stdout.print("SIMD Configuration:\n", .{}) catch return;
     stdout.print("  Architecture: {s}\n", .{capabilities.arch_name}) catch return;
