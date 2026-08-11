@@ -13,7 +13,7 @@
 const std = @import("std");
 const f16_utils = @import("f16_utils.zig");
 const sparse_simd = @import("sparse_simd.zig");
-const simd_config = @import("src/simd_config.zig");
+const simd_config = @import("simd_config.zig");
 
 const EMBED_DIM = 243;
 const HIDDEN_DIM = 729;

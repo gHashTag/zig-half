@@ -13,7 +13,7 @@
 // φ² + 1/φ² = 3 | TRINITY
 
 const std = @import("std");
-const simd_config = @import("src/simd_config.zig");
+const simd_config = @import("simd_config.zig");
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // ADAPTIVE VECTOR TYPES
