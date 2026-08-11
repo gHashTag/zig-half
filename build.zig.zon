@@ -1,5 +1,8 @@
 .{
-    .name = "zig-half",
+    .name = .zig_half,
     .version = "0.1.0",
-    .paths = .{"src"},
+    .minimum_zig_version = "0.15.0",
+    .fingerprint = 0x3330a2c2540783d1,
+    .paths = .{ "src", "build.zig", "build.zig.zon" },
+    .dependencies = .{},
 }

@@ -1,0 +1,31 @@
+name: CI
+
+# This repository has never had a workflow that builds it.
+#
+# That is the same gap that hid sixteen defects in gHashTag/zig-golden-float and
+# five in gHashTag/zig-hdc: a package can look maintained, be imported by name,
+# and not compile for anybody, because nothing ever asked it to.
+#
+# Pinned to 0.15.2 because that is the version the packages in this estate that
+# would consume it are built with. Building on something else would prove the
+# package works for somebody who is not the consumer.
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: mlugg/setup-zig@v2
+        with:
+          version: 0.15.2
+      - run: zig build
+      - run: zig build test

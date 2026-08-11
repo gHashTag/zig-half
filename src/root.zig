@@ -1,12 +1,13 @@
 // zig-half — f16/bf16 SIMD library for Zig
 //
-// A high-performance half-precision float library with:
-// - Adaptive SIMD width (AVX2, AVX-512, NEON, SSE2)
-// - f16 ↔ f32 conversions with zero-copy vectorization
-// - Ternary quantization {-1, 0, +1} with 2-bit packing
-// - Sparse ternary matvec with zero-chunk skipping
-// - Shadow weight storage for gradient accumulation
-// - Comprehensive benchmarks
+// The re-exports below were written as `pub use module.{ A, B as C };`, which is
+// Rust. Zig has no `use` statement and no `as` aliasing, so this file -- the
+// module root, the surface every consumer imports -- has never been valid Zig,
+// and the package has therefore never been usable by anybody. Nothing reported
+// it because the repository had no workflow that built anything.
+//
+// Each of those blocks is now the Zig it was standing in for: one `pub const`
+// per name, with the aliases preserved exactly as they were spelled.
 //
 // Extracted from Trinity HSLM training infrastructure.
 // See: https://github.com/gHashTag/trinity
@@ -15,80 +16,72 @@ const std = @import("std");
 
 // Re-export SIMD configuration and detection
 pub const simd_config = @import("simd_config.zig");
-pub use simd_config.{ capabilities, VecF16, VecF32, VecI8, zeroVecF16, zeroVecF32, zeroVecI8 };
+pub const capabilities = simd_config.capabilities;
+pub const VecF16 = simd_config.VecF16;
+pub const VecF32 = simd_config.VecF32;
+pub const VecI8 = simd_config.VecI8;
+pub const zeroVecF16 = simd_config.zeroVecF16;
+pub const zeroVecF32 = simd_config.zeroVecF32;
+pub const zeroVecI8 = simd_config.zeroVecI8;
 
 // Re-export f16 utilities
 pub const f16_utils = @import("f16_utils.zig");
-pub use f16_utils.{
-    VEC_F16_SIZE,
-    VEC_F32_SIZE,
-    VecF16 as VecF16Alias,
-    VecF32 as VecF32Alias,
-    zeroVecF16 as zeroVecF16Alias,
-    zeroVecF32 as zeroVecF32Alias,
-    f32ToF16Slice,
-    f16ToF32Slice,
-    vecF16ToF32,
-    vecF32ToF16,
-    isTernarySafeF16,
-    countTernarySafeF16,
-    countNonFiniteF16,
-    maxAbsF16,
-    maxAbsF16Simd,
-    dotProductF16,
-    l2NormF16,
-    cosineSimilarityF16,
-    quantizeF16ToTernary,
-};
+pub const VEC_F16_SIZE = f16_utils.VEC_F16_SIZE;
+pub const VecF16Alias = f16_utils.VecF16;
+pub const VecF32Alias = f16_utils.VecF32;
+pub const zeroVecF16Alias = f16_utils.zeroVecF16;
+pub const zeroVecF32Alias = f16_utils.zeroVecF32;
+pub const f32ToF16Slice = f16_utils.f32ToF16Slice;
+pub const f16ToF32Slice = f16_utils.f16ToF32Slice;
+pub const vecF16ToF32 = f16_utils.vecF16ToF32;
+pub const vecF32ToF16 = f16_utils.vecF32ToF16;
+pub const isTernarySafeF16 = f16_utils.isTernarySafeF16;
+pub const countTernarySafeF16 = f16_utils.countTernarySafeF16;
+pub const countNonFiniteF16 = f16_utils.countNonFiniteF16;
+pub const maxAbsF16 = f16_utils.maxAbsF16;
+pub const maxAbsF16Simd = f16_utils.maxAbsF16Simd;
+pub const dotProductF16 = f16_utils.dotProductF16;
+pub const l2NormF16 = f16_utils.l2NormF16;
+pub const cosineSimilarityF16 = f16_utils.cosineSimilarityF16;
+pub const quantizeF16ToTernary = f16_utils.quantizeF16ToTernary;
 
 // Re-export f16 shadow weights
 pub const f16_shadow = @import("f16_shadow.zig");
-pub use f16_shadow.{
-    F16ShadowStorage,
-    DEFAULT_SYNC_INTERVAL,
-    DEFAULT_QUANTIZE_THRESHOLD,
-    f32ToF16Slice as f32ToF16SliceShadow,
-    f16ToF32Slice as f16ToF32SliceShadow,
-    dotProductF16 as dotProductF16Shadow,
-};
+pub const F16ShadowStorage = f16_shadow.F16ShadowStorage;
+pub const f32ToF16SliceShadow = f16_shadow.f32ToF16Slice;
+pub const f16ToF32SliceShadow = f16_shadow.f16ToF32Slice;
+pub const dotProductF16Shadow = f16_shadow.dotProductF16;
 
 // Re-export sparse SIMD
 pub const sparse_simd = @import("sparse_simd.zig");
-pub use sparse_simd.{
-    VEC_I8_SIZE,
-    VEC_F16_SIZE as VEC_F16_SIZE_Sparse,
-    VEC_F32_SIZE as VEC_F32_SIZE_Sparse,
-    VecI8 as VecI8Alias,
-    VecF16 as VecF16SparseAlias,
-    VecF32 as VecF32SparseAlias,
-    zeroVecI8 as zeroVecI8Alias,
-    zeroVecF16 as zeroVecF16SparseAlias,
-    sparseTernaryDot,
-    denseTernaryDot,
-    sparseTernaryMatvec,
-    denseTernaryMatvec,
-    countZeroChunks,
-    sparsityRatio,
-    estimateSpeedup,
-};
+pub const VEC_I8_SIZE = sparse_simd.VEC_I8_SIZE;
+pub const VEC_F16_SIZE_Sparse = sparse_simd.VEC_F16_SIZE;
+pub const VEC_F32_SIZE_Sparse = sparse_simd.VEC_F32_SIZE;
+pub const VecI8Alias = sparse_simd.VecI8;
+pub const VecF16SparseAlias = sparse_simd.VecF16;
+pub const VecF32SparseAlias = sparse_simd.VecF32;
+pub const zeroVecI8Alias = sparse_simd.zeroVecI8;
+pub const zeroVecF16SparseAlias = sparse_simd.zeroVecF16;
+pub const sparseTernaryDot = sparse_simd.sparseTernaryDot;
+pub const denseTernaryDot = sparse_simd.denseTernaryDot;
+pub const sparseTernaryMatvec = sparse_simd.sparseTernaryMatvec;
+pub const denseTernaryMatvec = sparse_simd.denseTernaryMatvec;
+pub const countZeroChunks = sparse_simd.countZeroChunks;
+pub const sparsityRatio = sparse_simd.sparsityRatio;
+pub const estimateSpeedup = sparse_simd.estimateSpeedup;
 
 // Re-export ternary packing
 pub const ternary_pack = @import("ternary_pack.zig");
-pub use ternary_pack.{
-    TRIT_NEG,
-    TRIT_ZERO,
-    TRIT_POS,
-    packTernary16,
-    unpackTernary16,
-    packTernarySlice,
-    unpackTernarySlice,
-    tritToChar,
-    charToTrit,
-    tritsToString,
-    stringToTrits,
-    countTrits,
-    compressionRatio,
-};
+pub const packTernary16 = ternary_pack.packTernary16;
+pub const unpackTernary16 = ternary_pack.unpackTernary16;
+pub const packTernarySlice = ternary_pack.packTernarySlice;
+pub const unpackTernarySlice = ternary_pack.unpackTernarySlice;
+pub const tritToChar = ternary_pack.tritToChar;
+pub const charToTrit = ternary_pack.charToTrit;
+pub const tritsToString = ternary_pack.tritsToString;
+pub const stringToTrits = ternary_pack.stringToTrits;
+pub const countTrits = ternary_pack.countTrits;
+pub const compressionRatio = ternary_pack.compressionRatio;
 
 // ═════════════════════════════════════════════════════════════════════════════
 // VERSION & INFO
@@ -142,3 +135,11 @@ pub inline fn printConfig() void {
 //     // Print SIMD info
 //     zig_half.printConfig();
 // }
+
+test "every public declaration of this module is analysed" {
+    // src/root.zig is what a consumer imports, and no test target rooted it
+    // before -- so the one surface that matters was the one never compiled.
+    // The same omission hid sixteen defects in gHashTag/zig-golden-float and
+    // five in gHashTag/zig-hdc.
+    @import("std").testing.refAllDeclsRecursive(@This());
+}
