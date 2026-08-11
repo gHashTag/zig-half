@@ -142,3 +142,11 @@ pub inline fn printConfig() void {
 //     // Print SIMD info
 //     zig_half.printConfig();
 // }
+
+test "every public declaration of this module is analysed" {
+    // src/root.zig is what a consumer imports, and no test target rooted it
+    // before -- so the one surface that matters was the one never compiled.
+    // The same omission hid sixteen defects in gHashTag/zig-golden-float and
+    // five in gHashTag/zig-hdc.
+    @import("std").testing.refAllDeclsRecursive(@This());
+}
